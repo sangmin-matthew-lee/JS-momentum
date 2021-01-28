@@ -7,6 +7,13 @@ h1 {
   transition: color 0.5s ease-in-out;
 }
 
+spanc {
+  color: yellowgreen;
+  position: absolute;
+  top: 30px;
+  left: 1150px;
+}
+
 .clicked {
   color: red;
 }

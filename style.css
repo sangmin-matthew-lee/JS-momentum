@@ -1,17 +1,45 @@
 body {
-  background-color: #6c5ce7;
+  background-color: white;
 }
 
 h1 {
-  color: skyblue;
+  color: white;
   transition: color 0.5s ease-in-out;
+  text-align: center;
+  margin-top: 10%;
+  font-size: 150px;
+  margin-bottom: 0px;
+}
+
+h4 {
+  text-align: center;
+  color: white;
+  transition: color 0.5s ease-in-out;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 75px;
+  margin-bottom: 20px;
+  margin-top: 5px;
 }
 
 spanc {
   color: yellowgreen;
-  position: absolute;
-  top: 30px;
-  left: 1150px;
+  text-align: center;
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  margin-left: 85%;
+}
+
+ul {
+  list-style-type: none;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  text-align: center;
+}
+
+li {
+  margin-bottom: 7px;
 }
 
 .clicked {
@@ -22,9 +50,16 @@ spanc {
   cursor: pointer;
 }
 
+.toDoForm {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
 .form,
 .greeting {
   display: none;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .showing {
@@ -48,4 +83,9 @@ spanc {
   height: 100%;
   z-index: -1;
   animation: fadeIn 0.5s linear;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
 }

@@ -1,43 +1,54 @@
-const form = document.querySelector(".js-form"),
-input = form.querySelector("input"),
-greeting = document.querySelector(".js-greeting");
+const form = document.querySelector(".js-form");
+const input = form.querySelector("input");
+const greetings = document.querySelector(".js-greetings");
 
-const USER_LS = "currentUser",
-SHOWING_CN = "showing";
+const LS_USER = "currentUser";
+const CN_SHOWING = "showing";
 
-function saveUser(text){
-    localStorage.setItem(USER_LS,text);
+function saveName(name){
+    localStorage.setItem(LS_USER,name);
 }
 
 function handleSubmit(event){
     event.preventDefault();
     const currentValue = input.value;
-    paintGreeting(currentValue);
-    saveUser(currentValue);
+    printGreeting(currentValue);
+    saveName(currentValue);
 }
 
-function askUserName(){
-    form.classList.add(SHOWING_CN);
+function askForName(){
+    form.classList.add(CN_SHOWING);
     form.addEventListener("submit", handleSubmit);
 }
 
-function paintGreeting(text){
-    form.classList.remove(SHOWING_CN);
-    greeting.classList.add(SHOWING_CN);
-    greeting.innerText = `Hello ${text}`;
+function printGreeting(text){
+    const currentTime = new Date().getHours();
+    form.classList.remove(CN_SHOWING);
+    greetings.classList.add(CN_SHOWING);
+    if(currentTime > 6 && currentTime < 12){
+        greetings.innerText = `Good Morning, ${text}`;
+    }else if (currentTime >=12 && currentTime < 18){
+        greetings.innerText = `Good Afternoon, ${text}`;
+    }else if (currentTime >=18 && currentTime < 22){
+        greetings.innerText = `Good Evening, ${text}`;
+    }else{
+        greetings.innerText = `Silence is your inspiration\nWelcome ${text}`
+    }
+
+    
 }
 
-function loadName(){
-    const currentUser = localStorage.getItem(USER_LS);
+function getName(){
+    const currentUser = localStorage.getItem(LS_USER);
     if(currentUser === null){
-        askUserName();
+        askForName();
     }else{
-        paintGreeting(currentUser);
+        printGreeting(currentUser);
     }
 }
 
-function init() {
-    loadName();
+function init(){
+    getName();
 }
 
 init();

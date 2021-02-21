@@ -1,22 +1,26 @@
 const body = document.querySelector("body");
 
-const IMG_NUMBER = 3; 
+const IMG_NUM = 5;
 
-function genRamdom(){
-    const number = Math.floor(Math.random() * IMG_NUMBER);
-    return number;
+function handleImg(event){
+    console.log("Image is loaded");
 }
 
-function printImage(imgNumber)
-{
+function printImage(imgNum){
     const image = new Image();
-    image.src = `images/${imgNumber + 1}.jpg`;
-    image.classList.add(`bgImage`);
+    image.src = `/images/${imgNum +1}.jpg`;
+    image.classList.add("background");
     body.prepend(image);
+    
+}
+
+function genRanNum(){
+    const ranNum = Math.floor(Math.random() * IMG_NUM);
+    return ranNum;
 }
 
 function init(){
-    const randomNum = genRamdom();
-    printImage(randomNum);
+    const ranNum = genRanNum();
+    printImage(ranNum);
 }
 init();

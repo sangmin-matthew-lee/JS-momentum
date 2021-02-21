@@ -1,62 +1,56 @@
-const weather = document.querySelector(".js-weather");
+const weatherConatiner = document.querySelector(".js-weather");
 
+const COORDINATION = 'coordination';
 const API_KEY = "1df503c9d7ecb6ca31c511ac381b7472";
-const COORDS = `coords`;
 
-function getWeather(lat,lon){
-    fetch(
-        `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-        ).then(function(responese){
-            return responese.json();
-        }).then(function(json){
-            console.log(json);
-            const temp = json.main.temp;
-            const place = json.name;
-            weather.innerText = `${temp}°C at ${place}`;
-        })
+
+function saveCoordinatio(coordinationObj){
+    localStorage.setItem(COORDINATION, JSON.stringify(coordinationObj));
 }
 
-function saveCoords(coordsObj){
-    localStorage.setItem(COORDS, JSON.stringify(coordsObj));
+function handleGeoFail(){
+    console.log("Can't get geo location");
 }
 
-function handleGeoSucces(position){
+function handleGeoSuccess(position){
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    const coordsObj = {
+
+    const coordinationObj ={
         latitude,
         longitude
-    };
-
-    saveCoords(coordsObj);
+    }
+    saveCoordinatio(coordinationObj);    
     getWeather(latitude,longitude);
 }
 
-function handleGeoError()
-{
-    console.log(`Can't access geo location`); 
+function askCoordination(){
+    navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoFail)
 }
 
-function askForCoords(){
-    navigator.geolocation.getCurrentPosition(handleGeoSucces, handleGeoError);
-    
+function getWeather(lat,long){
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}&units=metric`
+    ).then(function(response){
+        return response.json();
+    }).then(function(json){
+        const temperature = Math.round(json.main.temp);
+        const place = json.name;
+        weatherConatiner.innerText = `${temperature} °C \n${place}`;
+    });
 }
 
-function loadCoords()
-{
-    const loadedCoords = localStorage.getItem(COORDS);
-    if(loadedCoords === null)
-    {
-        askForCoords();
+function getCoordination(){
+    const position = localStorage.getItem(COORDINATION);
+    if(position === null){
+        askCoordination();
     }else{
-        const parsedCoords = JSON.parse(loadedCoords);
-        getWeather(parsedCoords.latitude, parsedCoords.longitude);
-    }
+        const parseCoordination = JSON.parse(position);
+        getWeather(parseCoordination.latitude, parseCoordination.longitude);
+    }  
 }
-
 
 
 function init(){
-    loadCoords();
+    getCoordination();
 }
 init();
